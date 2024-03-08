@@ -1,0 +1,6 @@
+<h2><%= @post.title %></h2>
+<p><%= @post.content %></p>
+
+<%= link_to("Edit", "/posts/#{@post.id}/edit") %>
+<%= link_to("Delete", "/posts/#{@post.id}/destroy", data: { turbo_method: :post, turbo_confirm: "Are you sure?" }) %>
+
