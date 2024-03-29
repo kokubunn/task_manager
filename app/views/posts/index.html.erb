@@ -1,7 +1,22 @@
 
-<% @posts.each do |post| %>
-    <div>
-        <li><%= link_to(post.title, "/posts/#{post.id}") %></li>
-    </div>
-<% end %>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Deadline</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        <% @posts.each do |post| %>
+            <tr>
+                <th scope="row"><%= link_to(post.title, "/posts/#{post.id}") %></th>
+                <td><%= post.deadline.to_date if post.deadline.present? %></td>
+                <td><%= link_to("Edit", "/posts/#{post.id}/edit", class: "btn btn-sm btn-success") %></td>
+                <td><%= link_to("Delete", "/posts/#{post.id}/destroy", data: { turbo_method: :post, turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-danger") %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
 

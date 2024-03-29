@@ -12,13 +12,13 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(title: params[:title], content: params[:content])
-    if @post.save
-      redirect_to("/posts/index")
-    else
-      flash[:notice] = "Title can't be blank"
-      render("posts/new")
-    end
+    @post = Post.new(title: params[:title], content: params[:content], deadline: params[:deadline])
+
+    @post.save!
+    redirect_to("/posts/index", success: "postが投稿されました。")
+  rescue ActiveRecord::RecordInvalid => e
+    flash.now[:danger] = "postが投稿されませんでした。"
+    render("posts/new")
   end
 
   def edit
@@ -29,14 +29,22 @@ class PostsController < ApplicationController
     @post = Post.find_by(id: params[:id])
     @post.title = params[:title]
     @post.content = params[:content]
-    @post.save
-    redirect_to("/posts/index")
+    @post.deadline = params[:deadline]
+
+    @post.save!
+    redirect_to("/posts/index", success: "postが更新されました。")
+  rescue ActiveRecord::RecordInvalid => e
+    render("posts/edit")
   end
 
   def destroy
     @post = Post.find_by(id: params[:id])
     @post.destroy
-    redirect_to("/posts/index")
+    redirect_to("/posts/index", warning: "postが削除されました。")
+  end
+
+  def date_params
+    params.require(:post).permit(:date)
   end
 
 

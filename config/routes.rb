@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :users
+
   get "/" => "posts#index"
   get 'posts/index' => "posts#index"
   get "posts/new" => "posts#new"

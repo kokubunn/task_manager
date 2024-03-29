@@ -65,3 +65,10 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem 'bootstrap', '~> 5.3.0'
+gem "sassc-rails"
+
+gem 'mini_racer'
+
+gem 'bcrypt', '~> 3.1.20'
